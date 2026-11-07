@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>看剧吧-追剧推荐与剧集解析_热门剧集_看剧指南</title>
+  <meta name="description" content="看剧吧是剧迷的追剧指南与讨论社区，提供热门剧集推荐、深度剧评、播出时间表与观众真实评论。无论你想找下饭剧、悬疑剧还是口碑神作，这里都有靠谱的看剧参考。">
+  <meta name="keywords" content="看剧吧,追剧推荐,剧集解析,热门剧集,看剧指南">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%232b6cb0'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E看%3C/text%3E%3C/svg%3E">
+  <style>
+    /* ----- 全局变量与基础 ----- */
+    :root {
+      --bg-page: #f7f9fc;
+      --bg-card: #ffffff;
+      --text-primary: #1a2639;
+      --text-secondary: #4a5a6e;
+      --text-muted: #7b8a9e;
+      --brand: #2b6cb0;
+      --brand-light: #e9f0fa;
+      --brand-dark: #1a4a7a;
+      --accent: #f6ad55;
+      --accent-soft: #fef2e4;
+      --border-light: #e2e9f2;
+      --shadow-sm: 0 4px 12px rgba(0, 20, 40, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 20, 40, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --max-width: 1200px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-base);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    /* ----- 配色风格：浅色清爽 + 柔和卡片 ----- */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 28px;
+      background: var(--brand);
+      border-radius: 4px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ----- 导航 ----- */
+    .navbar {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--brand);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .nav-links a { color: var(--text-secondary); }
+    .nav-links a:hover { color: var(--brand); text-decoration: none; }
+    .nav-search {
+      display: flex;
+      align-items: center;
+      background: var(--bg-page);
+      border-radius: 40px;
+      padding: 6px 16px;
+      border: 1px solid var(--border-light);
+    }
+    .nav-search input {
+      border: none;
+      background: transparent;
+      padding: 8px 4px;
+      font-size: 0.9rem;
+      outline: none;
+      width: 180px;
+    }
+    .nav-search button {
+      background: var(--brand);
+      border: none;
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 8px 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-search button:hover { background: var(--brand-dark); }
+    .menu-toggle { display: none; font-size: 1.8rem; background: none; border: none; }
+
+    /* ----- Banner ----- */
+    .hero {
+      padding: 48px 0 32px;
+      background: linear-gradient(135deg, #f0f5fe 0%, #ffffff 80%);
+    }
+    .hero-grid {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero-content { flex: 1; }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: var(--brand); }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 28px;
+    }
+    .hero-search {
+      display: flex;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 60px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      padding: 6px;
+    }
+    .hero-search input {
+      flex: 1;
+      border: none;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border-radius: 60px;
+      outline: none;
+      background: transparent;
+    }
+    .hero-search button {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .hero-search button:hover { background: var(--brand-dark); }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .tag {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: 0.2s;
+      cursor: default;
+    }
+    .tag:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .hero-poster {
+      width: 280px;
+      height: 340px;
+      background: linear-gradient(145deg, #2b6cb0, #1a4a7a);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-poster::before {
+      content: '🎬';
+      font-size: 80px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      opacity: 0.3;
+    }
+    .hero-poster p { font-size: 0.9rem; opacity: 0.9; }
+    .hero-poster strong { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+
+    /* ----- 内容简介卡片 ----- */
+    .intro-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      margin: 40px 0;
+    }
+    .intro-card p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+    .intro-card p:last-child { margin-bottom: 0; }
+
+    /* ----- 热门推荐网格 ----- */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--brand-light);
+      color: var(--brand);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0;
+    }
+    .card-tags span {
+      background: var(--bg-page);
+      font-size: 0.7rem;
+      padding: 2px 10px;
+      border-radius: 20px;
+      color: var(--text-muted);
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 8px 0 14px;
+      flex: 1;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-light);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+
+    /* ----- 最新更新列表 ----- */
+    .update-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .update-item {
+      background: #fff;
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      border-left: 4px solid var(--brand);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .update-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .update-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .update-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* ----- 分类入口 ----- */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .category-item {
+      background: #fff;
+      border-radius: var(--radius-sm);
+      padding: 18px 12px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: 0.2s;
+      color: var(--text-primary);
+    }
+    .category-item:hover {
+      background: var(--brand-light);
+      border-color: var(--brand);
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    /* ----- 深度解析正文 ----- */
+    .deep-dive {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 40px 44px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .deep-dive h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .deep-dive p {
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+    .deep-dive h3 {
+      font-size: 1.3rem;
+      margin: 28px 0 12px;
+      color: var(--text-primary);
+    }
+
+    /* ----- 体验指南 / 功能卡片 ----- */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .feature-item {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .feature-item h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .feature-item p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ----- FAQ（双栏问答） ----- */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .faq-item {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .faq-q {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+      display: flex;
+      gap: 10px;
+    }
+    .faq-q::before { content: 'Q'; color: var(--brand); font-weight: 800; }
+    .faq-a {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding-left: 22px;
+    }
+
+    /* ----- 用户评论（社区短评风格） ----- */
+    .comments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .comment-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+    }
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--brand);
+      font-size: 0.9rem;
+    }
+    .comment-user {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .comment-date {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+    .comment-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    /* ----- 相关资讯列表 ----- */
+    .news-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .news-item {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .news-date {
+      font-size: 0.75rem;
+      color: var(--brand);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .news-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .news-summary {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* ----- 页脚 ----- */
+    .footer {
+      background: #1a2639;
+      color: #b0c1d4;
+      padding: 48px 0 32px;
+      margin-top: 48px;
+      font-size: 0.9rem;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .footer-brand h5 {
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+    .footer-col h6 {
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+    .footer-col ul li a {
+      color: #9fb1c4;
+      font-size: 0.85rem;
+    }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid #2c3e50;
+      margin-top: 36px;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: #7f8fa4;
+    }
+    .footer-bottom a { color: #9fb1c4; }
+
+    /* ----- 响应式 ----- */
+    @media (max-width: 992px) {
+      .hero-grid { flex-direction: column; }
+      .hero-poster { width: 100%; height: 200px; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .nav-search { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+      .container { padding: 0 16px; }
+      .deep-dive { padding: 24px 20px; }
+      .intro-card { padding: 24px 20px; }
+      .section-title { font-size: 1.5rem; }
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+  <!-- 导航 -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="logo" style="text-decoration:none;">
+        <span class="logo-mark">看</span>
+        <span>看剧吧</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#hot">热门推荐</a>
+        <a href="/#latest">最新更新</a>
+        <a href="/#deep">深度解析</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#comments">用户评论</a>
+        <a href="/#news">剧集资讯</a>
+      </div>
+      <div class="nav-search">
+        <input type="text" placeholder="搜索剧名、演员、类型...">
+        <button>搜索</button>
+      </div>
+      <button class="menu-toggle" aria-label="菜单">☰</button>
+    </div>
+  </nav>
+
+  <!-- 首屏 Banner -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>看剧吧 · 发现你的下一部<span>好剧</span></h1>
+        <p class="hero-desc">从热门新剧到经典老剧，从悬疑烧脑到轻松下饭，看剧吧为你整理真实口碑与深度解析。</p>
+        <p class="hero-desc" style="margin-top:-16px; font-size:1rem;">告别剧荒，每一部推荐都值得打开。</p>
+        <div class="hero-search">
+          <input type="text" placeholder="输入剧名、演员或类型，如「漫长的季节」">
+          <button>搜剧</button>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">悬疑</span>
+          <span class="tag">都市</span>
+          <span class="tag">古装</span>
+          <span class="tag">科幻</span>
+          <span class="tag">治愈</span>
+          <span class="tag">短剧</span>
+          <span class="tag">高分剧</span>
+        </div>
+      </div>
+      <div class="hero-poster">
+        <p>本周口碑榜</p>
+        <strong>《漫长的季节》</strong>
+        <p>9.4分 · 生活悬疑 · 12集全</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 内容简介 -->
+    <section class="intro-card" id="intro">
+      <h2 class="section-title">关于看剧吧</h2>
+      <p>看剧吧是一个为剧迷打造的轻量内容专题站。我们深知“看剧”这件事早已不只是打开视频平台随便点开一集——它可能是你下班后的放松仪式，也可能是周末沉浸式刷完一整季的快乐。因此这个页面围绕“看剧”这个核心动作，整理了热门剧集推荐、类型解析、播出动态以及真实观众反馈。无论你是想找一部下饭喜剧，还是想挑战逻辑缜密的悬疑剧，又或者只想看看最近大家都在追什么，看剧吧都能提供有价值的参考。</p>
+      <p>页面内容覆盖国产剧、美剧、韩剧、日剧以及当下流行的微短剧，按照题材和热度做了结构化整理。我们不做简单的列表堆砌，而是用编辑视角写清楚每部剧的看点、适合谁看、以及和其他剧的差异。如果你经常在社交平台搜“最近有什么好看的剧”，那么把看剧吧加入收藏夹，会比反复刷碎片信息更高效。</p>
+      <p>“看剧吧”这个名字本身就代表了一种轻松、日常的追剧态度。我们相信好剧值得被看见，也值得被认真讨论。下面就从热门推荐开始，慢慢逛。</p>
+    </section>
+
+    <!-- 热门推荐 -->
+    <section id="hot">
+      <h2 class="section-title">热门推荐 · 大家都在看</h2>
+      <p class="section-sub">根据站内观看与讨论热度综合排序，每周更新</p>
+      <div class="grid-cards">
+        <div class="card">
+          <span class="card-badge">悬疑 · 生活</span>
+          <h3>漫长的季节</h3>
+          <div class="card-tags"><span>范伟</span><span>辛爽</span><span>9.4分</span></div>
+          <p class="card-desc">三条时间线交织的东北往事，生活质感与悬疑内核完美融合，后劲极大。</p>
+          <div class="card-meta"><span>🔥 热度 9850</span><span>全12集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">古装 · 权谋</span>
+          <h3>琅琊榜</h3>
+          <div class="card-tags"><span>胡歌</span><span>权谋</span><span>9.4分</span></div>
+          <p class="card-desc">国产权谋剧标杆，逻辑缜密、角色丰满，每隔两年拿出来重刷依然经典。</p>
+          <div class="card-meta"><span>🔥 热度 9120</span><span>全54集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">科幻 · 悬疑</span>
+          <h3>三体</h3>
+          <div class="card-tags"><span>刘慈欣</span><span>腾讯</span><span>8.7分</span></div>
+          <p class="card-desc">国产科幻剧里程碑，对原著的还原度超出预期，古筝行动名场面出圈。</p>
+          <div class="card-meta"><span>🔥 热度 8700</span><span>全30集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">都市 · 情感</span>
+          <h3>去有风的地方</h3>
+          <div class="card-tags"><span>刘亦菲</span><span>治愈</span><span>8.6分</span></div>
+          <p class="card-desc">云南旅居慢生活，没有强冲突却让人看得心里发暖，适合下饭或睡前看。</p>
+          <div class="card-meta"><span>🔥 热度 8200</span><span>全40集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">韩剧 · 复仇</span>
+          <h3>黑暗荣耀</h3>
+          <div class="card-tags"><span>宋慧乔</span><span>复仇</span><span>9.0分</span></div>
+          <p class="card-desc">校园暴力复仇题材，节奏紧凑、情绪张力足，女主全程智商在线。</p>
+          <div class="card-meta"><span>🔥 热度 7990</span><span>全16集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">美剧 · 奇幻</span>
+          <h3>最后生还者</h3>
+          <div class="card-tags"><span>HBO</span><span>末日</span><span>8.9分</span></div>
+          <p class="card-desc">游戏改编天花板，父女公路片质感，情感浓度极高，非玩家也能入坑。</p>
+          <div class="card-meta"><span>🔥 热度 7800</span><span>全9集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">短剧 · 爽感</span>
+          <h3>我在八零年代当后妈</h3>
+          <div class="card-tags"><span>竖屏</span><span>穿越</span><span>7.8分</span></div>
+          <p class="card-desc">每集一分钟左右的微短剧，节奏飞快，适合通勤或排队时刷几集。</p>
+          <div class="card-meta"><span>🔥 热度 7500</span><span>全80集</span></div>
+        </div>
+        <div class="card">
+          <span class="card-badge">日剧 · 职场</span>
+          <h3>重启人生</h3>
+          <div class="card-tags"><span>安藤樱</span><span>重生</span><span>9.1分</span></div>
+          <p class="card-desc">女性友谊与日常对话的奇迹，看似平淡却越看越上头，温暖治愈。</p>
+          <div class="card-meta"><span>🔥 热度 7300</span><span>全10集</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最新更新 -->
+    <section id="latest">
+      <h2 class="section-title">最新更新 · 今日上新</h2>
+      <div class="update-list">
+        <div class="update-item">
+          <span class="update-time">2026-11-07 10:20</span>
+          <span class="update-title">《繁花》4K修复版上线</span>
+          <span class="update-desc">王家卫执导，胡歌、马伊琍主演，画面细节更丰富。</span>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-07 09:45</span>
+          <span class="update-title">《庆余年 第二季》第28集更新</span>
+          <span class="update-desc">范闲与二皇子朝堂对峙，剧情进入高潮。</span>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-06 21:00</span>
+          <span class="update-title">韩剧《泪之女王》大结局</span>
+          <span class="update-desc">收视率突破24%，洪海仁与白贤佑结局揭晓。</span>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-06 18:30</span>
+          <span class="update-title">微短剧《重生之我在霸总身边当保姆》上线</span>
+          <span class="update-desc">反套路喜剧，首日播放量破500万。</span>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-06 15:10</span>
+          <span class="update-title">美剧《怪奇物语 第五季》预告发布</span>
+          <span class="update-desc">最终季定档2027年1月，原班人马回归。</span>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-05 20:00</span>
+          <span class="update-title">《大江大河3》官宣定档</span>
+          <span class="update-desc">12月11日登陆央视一套，王凯、杨烁继续主演。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分类入口 -->
+    <section id="categories">
+      <h2 class="section-title">按类型找剧</h2>
+      <div class="category-grid">
+        <a href="/#hot" class="category-item">悬疑烧脑</a>
+        <a href="/#hot" class="category-item">古装权谋</a>
+        <a href="/#hot" class="category-item">都市情感</a>
+        <a href="/#hot" class="category-item">科幻奇幻</a>
+        <a href="/#hot" class="category-item">治愈下饭</a>
+        <a href="/#hot" class="category-item">高分短剧</a>
+        <a href="/#hot" class="category-item">美剧精选</a>
+        <a href="/#hot" class="category-item">韩剧日剧</a>
+      </div>
+    </section>
+
+    <!-- 深度解析正文 -->
+    <section class="deep-dive" id="deep">
+      <h2>深度解析：看剧吧如何帮你找到对的那部剧</h2>
+      <p>很多人打开视频平台，面对琳琅满目的封面，刷了十分钟却依然不知道看什么。看剧吧存在的意义，就是缩短这个决策过程。我们不是简单罗列热门榜单，而是从“时间成本”和“情绪需求”两个维度帮你判断。时间充裕的周末，你可能需要一部信息密度高、值得反复琢磨的剧，比如《漫长的季节》；通勤路上只有碎片时间，那么每集几分钟的微短剧或者单元剧就更合适。看剧吧推荐的每一部作品都会标注类型、集数、口碑评分以及适合的观看场景，让你一眼判断它和当下的自己是否匹配。</p>
+      <h3>国产剧的质感回归</h3>
+      <p>近几年国产剧在类型化和制作水准上进步明显。悬疑赛道出现了《漫长的季节》《隐秘的角落》这类兼具文学性和商业性的作品；古装赛道则从大女主爽剧转向更考究的《琅琊榜》《显微镜下的大明》。看剧吧在解析这些剧集时，会特别关注剧本逻辑和表演细节，而不是只谈热度。比如《漫长的季节》里范伟饰演的王响，那种东北下岗工人的执拗与幽默，是整部剧的情感锚点。这些内容在短视频平台很难讲透，但在看剧吧的深度解析模块里，你可以读到相对完整的观察。</p>
+      <h3>海外剧的视角补充</h3>
+      <p>美剧、韩剧、日剧各有稳定的受众。韩剧在复仇、财阀、奇幻爱情等题材上持续高产，且制作精良；美剧的工业化水准依然领先，尤其是科幻和犯罪类型；日剧则擅长在日常生活里挖掘细腻情感。看剧吧不对海外剧做无脑吹捧，而是客观标注文化门槛和观看建议。比如《黑暗荣耀》虽然爽感强，但涉及校园暴力的沉重议题，不适合低龄观众；《重启人生》的对话密度极高，需要耐心进入。这些提示能帮你避免“看了两集才发现不是我的菜”的尴尬。</p>
+      <h3>短剧的消费逻辑</h3>
+      <p>微短剧的爆发改变了看剧的节奏。单集1-2分钟、强冲突、快反转，非常适合现代人的碎片时间。但短剧质量参差不齐，看剧吧会从剧本完整度、表演自然度、制作水准三个维度筛选，推荐那些真正能让人看得下去的作品，而不是单纯博眼球。如果你从来没看过短剧，建议从口碑较好的穿越、喜剧类型开始，比如《我在八零年代当后妈》，至少能保证基本的叙事逻辑。</p>
+      <p>归根结底，看剧是一件很私人的事。看剧吧提供的所有推荐和解析，都只是帮你缩小范围，最终的选择权永远在你自己手上。希望这个页面能成为你追剧路上的实用工具，而不是又一个让人焦虑的待看清单。</p>
+    </section>
+
+    <!-- 体验指南 -->
+    <section id="guide">
+      <h2 class="section-title">体验指南 · 怎么用看剧吧</h2>
+      <div class="features">
+        <div class="feature-item">
+          <div class="feature-icon">📂</div>
+          <h4>分类筛选方便</h4>
+          <p>按悬疑、古装、都市、短剧等类型快速缩小范围，不用在混乱的标签里翻找。</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📱</div>
+          <h4>移动端友好</h4>
+          <p>卡片式布局在手机上也能清晰阅读，触控区域合理，单手操作无压力。</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔁</div>
+          <h4>适合追更收藏</h4>
+          <p>最新更新模块按时间排列，一眼看到今天有哪些剧集上线，方便追更。</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🧭</div>
+          <h4>相关推荐扩展</h4>
+          <p>每部剧的解析里会提到同类作品，帮你从一个点顺藤摸瓜找到更多好剧。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2 class="section-title">常见问题 · 看剧吧答疑</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-q">看剧吧是视频播放平台吗？</div>
+          <div class="faq-a">不是。看剧吧是一个内容推荐与解析专题页，不提供剧集在线播放。所有剧集信息仅作为观看参考，实际播放请前往各正版视频平台。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">推荐剧集的依据是什么？</div>
+          <div class="faq-a">综合豆瓣评分、社交平台讨论热度、站内编辑评价以及观众真实反馈。不接商业推广排名，尽量保持客观。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">我时间不多，应该从哪种剧开始看？</div>
+          <div class="faq-a">如果每天只有半小时，优先看微短剧或单集40分钟以内的单元剧；如果周末有整块时间，再考虑长剧集。看剧吧在推荐卡片里标注了集数，方便你判断。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">为什么有些热门剧没有收录？</div>
+          <div class="faq-a">页面会定期更新，部分新剧或小众剧可能尚未覆盖。你可以通过搜索框查找，或者关注后续更新。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">看剧吧的评分和豆瓣一致吗？</div>
+          <div class="faq-a">评分主要参考豆瓣，但部分短剧和海外剧会综合其他平台。每部剧的卡片里会注明评分来源，方便你交叉参考。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">如何第一时间知道剧集更新？</div>
+          <div class="faq-a">关注页面顶部的“最新更新”模块，我们按时间倒序排列当日和近期的剧集动态。也可以收藏本页，方便随时回来查看。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用户评论 -->
+    <section id="comments">
+      <h2 class="section-title">用户评论 · 大家怎么说</h2>
+      <div class="comments-grid">
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">追剧小张</div>
+            <span class="comment-user">追剧小张</span>
+            <span class="comment-date">2026-11-07</span>
+          </div>
+          <p class="comment-text">最近跟着看剧吧的推荐看了《漫长的季节》，真的后劲太大，最后一集哭得不行。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">Luna</div>
+            <span class="comment-user">Luna</span>
+            <span class="comment-date">2026-11-06</span>
+          </div>
+          <p class="comment-text">短剧推荐很实用，通勤路上刷完了《我在八零年代当后妈》，虽然有点土但莫名上头。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">老李看剧</div>
+            <span class="comment-user">老李看剧</span>
+            <span class="comment-date">2026-11-06</span>
+          </div>
+          <p class="comment-text">深度解析写得挺中肯，不是那种无脑吹，会讲缺点，这点很难得。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">阿圆</div>
+            <span class="comment-user">阿圆</span>
+            <span class="comment-date">2026-11-05</span>
+          </div>
+          <p class="comment-text">希望能多推点日剧，最近剧荒得厉害。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">夜猫子</div>
+            <span class="comment-user">夜猫子</span>
+            <span class="comment-date">2026-11-05</span>
+          </div>
+          <p class="comment-text">《黑暗荣耀》确实好看，但建议心理承受能力强的再看，校园暴力部分挺压抑的。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">芒果冰</div>
+            <span class="comment-user">芒果冰</span>
+            <span class="comment-date">2026-11-04</span>
+          </div>
+          <p class="comment-text">分类入口做得清楚，我一般直接点悬疑，省时间。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">追更人</div>
+            <span class="comment-user">追更人</span>
+            <span class="comment-date">2026-11-03</span>
+          </div>
+          <p class="comment-text">《庆余年2》更新太慢了，等得心焦，不过看剧吧更新提醒挺及时的。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">小鹿</div>
+            <span class="comment-user">小鹿</span>
+            <span class="comment-date">2026-11-03</span>
+          </div>
+          <p class="comment-text">《重启人生》真的太好看了！看完立刻安利给同事，看剧吧的推荐语写得很准。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">大熊</div>
+            <span class="comment-user">大熊</span>
+            <span class="comment-date">2026-11-02</span>
+          </div>
+          <p class="comment-text">能不能加个“已看”标记功能？有时候忘了自己看过没有。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">豆豆龙</div>
+            <span class="comment-user">豆豆龙</span>
+            <span class="comment-date">2026-11-01</span>
+          </div>
+          <p class="comment-text">最近在补《琅琊榜》，确实经典，看剧吧的解析让我注意到很多以前忽略的细节。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">Daisy</div>
+            <span class="comment-user">Daisy</span>
+            <span class="comment-date">2026-10-31</span>
+          </div>
+          <p class="comment-text">首页那个海报位可以多轮换几部剧吗？每次来都一样有点单调。</p>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="avatar">剧评人王</div>
+            <span class="comment-user">剧评人王</span>
+            <span class="comment-date">2026-10-30</span>
+          </div>
+          <p class="comment-text">深度解析部分如果能增加导演风格分析就更好了，现在偏重剧情。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相关资讯 -->
+    <section id="news">
+      <h2 class="section-title">剧集资讯 · 行业动态</h2>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-date">2026-11-07</div>
+          <h4 class="news-title">《繁花》4K修复版上线，王家卫美学再引热议</h4>
+          <p class="news-summary">修复版增加了部分未曝光镜头，胡歌、马伊琍的表演细节更清晰，剧迷纷纷二刷。</p>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026-11-06</div>
+          <h4 class="news-title">2026年Q4剧集市场观察：悬疑与短剧持续升温</h4>
+          <p class="news-summary">长视频平台悬疑剧场储备充足，微短剧单月上线量同比增长70%，精品化趋势明显。</p>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026-11-05</div>
+          <h4 class="news-title">《大江大河3》定档12月，原班人马回归</h4>
+          <p class="news-summary">王凯、杨烁、董子健再度合作，继续讲述改革开放浪潮中的个人命运。</p>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026-11-04</div>
+          <h4 class="news-title">韩剧《泪之女王》大结局收视破24%</h4>
+          <p class="news-summary">金秀贤、金智媛主演，结局创下tvN年度最高收视纪录，社交平台讨论量激增。</p>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026-11-03</div>
+          <h4 class="news-title">微短剧备案新规实施，行业加速规范化</h4>
+          <p class="news-summary">新规要求短剧内容备案审核，头部平台已下架部分违规作品，长期利好内容质量。</p>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026-11-02</div>
+          <h4 class="news-title">《怪奇物语》最终季预告片发布，2027年1月上线</h4>
+          <p class="news-summary">预告片24小时播放量破亿，主创表示结局将让粉丝满意。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <h5>看剧吧</h5>
+        <p style="max-width:300px;">一个轻量、真诚的剧集推荐专题页。不制造焦虑，只帮你找到下一部好剧。</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h6>内容</h6>
+          <ul>
+            <li><a href="/#hot">热门推荐</a></li>
+            <li><a href="/#latest">最新更新</a></li>
+            <li><a href="/#deep">深度解析</a></li>
+            <li><a href="/#faq">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h6>互动</h6>
+          <ul>
+            <li><a href="/#comments">用户评论</a></li>
+            <li><a href="/#news">剧集资讯</a></li>
+            <li><a href="/#categories">分类找剧</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h6>友情链接</h6>
+          <ul>
+            <li><a href="#">豆瓣电影</a></li>
+            <li><a href="#">腾讯视频</a></li>
+            <li><a href="#">爱奇艺</a></li>
+            <li><a href="#">优酷</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 看剧吧 · 内容仅供参考，不提供在线播放</span>
+      <span>免责声明：本站剧集信息来源于公开网络，如有异议请联系删除。</span>
+    </div>
+  </footer>
+</body>
+          </html>
